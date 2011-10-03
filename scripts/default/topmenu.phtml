@@ -1,0 +1,45 @@
+<?php
+/**
+ * Navigational Menu partial to output the navigation correctly
+ *
+ * <code>
+ * // User in the general Layout
+ * echo $this->navigation()->menu()->setPartial(array('menu.phtml', 'default'));
+ * </code>
+ *
+ * @category  CodeBlender
+ * @package   Theme
+ * @copyright Copyright (c) 2000-2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
+ * @license   http://codeblender.net/license
+ */
+// Set the filter option for the Active navigation
+$pages = $this->container->findAllBytopmenu(true);
+
+$count = count($pages);
+$class = '';
+?>
+
+<dl id="topMenu">
+
+    <?php
+// Invoke the translation
+    $translate = Zend_Registry::get('Zend_Translate');
+
+// Loop through the container
+    foreach ($pages as $k => $page) {
+
+        // Check whether the page is accepted through the ACL
+        if ($this->navigation()->accept($page)) {
+
+            // Check to see if this is the last menu item if so aad in the additional class
+            if ($count === $k + 1) {
+                $class = 'class="noBorder noPadding"';
+            }
+            ?>
+            <dt><a href="<?php echo $page->getHref(); ?>" title="<?php echo $translate->_($page->getLabel()); ?>" <?php echo $class; ?>><span><?php echo $translate->_($page->getLabel()); ?></span></a></dt>
+            <?php
+        }
+    }
+    ?>
+
+</dl>

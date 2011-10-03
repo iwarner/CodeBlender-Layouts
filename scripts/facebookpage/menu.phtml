@@ -1,0 +1,44 @@
+<?php
+/**
+ * Navigational Menu partial to output the side navigation
+ *
+ * <code>
+ * // Navigation
+ * echo $this->navigation()->menu()->setPartial(array('menu.phtml', 'default'));
+ * </code>
+ *
+ * @category  CodeBlender
+ * @package   Theme
+ * @copyright Copyright (c) 2000-2010 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
+ * @license   http://codeblender.net/license
+ */
+?>
+
+<ul class="navigation">
+
+    <?php
+    // Loop through the container
+    foreach ($this->container as $page) {
+
+        // Check whether the page is set as Visible and also it is accepted through the ACL
+        if ($page->isVisible() && $this->navigation()->accept($page)) {
+
+            // Create the class to use if the tab is active
+            $liClass = $page->isActive(false) ? ' class="active"' : '';
+
+            if ($page->getTitle()) {
+                $title = 'title="' . $page->getTitle() . '"';
+            } else {
+                $title = '';
+            }
+            ?>
+
+            <li<?php echo $liClass; ?>>
+                <a href="<?php echo $page->getHref(); ?>"<?php echo $title; ?> id="<?php echo $page->getResource() ?>"><span><?php echo $page->getLabel() ?></span></a>
+            </li>
+            <?php
+        }
+    }
+    ?>
+
+</ul>

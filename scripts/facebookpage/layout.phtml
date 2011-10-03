@@ -1,0 +1,116 @@
+<?php
+/**
+ * Iframe Layout template for the Facebook Theme
+ *
+ * @category  CodeBlender
+ * @package   Theme
+ * @copyright Copyright (c) 2000-2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
+ * @license   http://codeblender.net/license
+ */
+// Config
+$config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
+
+// Privacy Policy
+header('P3P:CP="We do not have a P3P policy"');
+
+// Create the Doctype as Strict
+echo $this->doctype('HTML5')
+?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+
+    <head>
+
+        <?php
+        // Header
+        try {
+            $this->header();
+        } catch (Exception $e) {
+        }
+
+        // Charset
+        $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8');
+
+        // Title
+        echo $this->headTitle($this->title);
+
+        // Stylesheet - Favicon
+        echo $this->headLink()
+                ->appendStylesheet($this->cssPath . '/jquery.ui.all.css', 'screen')
+                ->appendStylesheet($this->cssPath . '/main.css', 'screen')
+                ->appendStylesheet($this->themePath . '/css/facebook.css', 'screen')
+                ->appendStylesheet($this->cssPath . '/style.css', 'screen')
+                ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
+
+        if ($this->ogDescription) {
+            ?>
+            <meta property="og:description" content="<?php echo $this->ogDescription; ?>" />
+            <meta property="og:image" content="<?php echo $this->ogImage; ?>" />
+            <meta property="og:site_name" content="<?php echo $this->ogSiteName; ?>" />
+            <meta property="og:title" content="<?php echo $this->ogTitle; ?>" />
+            <meta property="og:type" content="<?php echo $this->ogType; ?>" />
+            <meta property="og:url" content="<?php echo $this->ogURL; ?>" />
+            <meta property="fb:app_id" content="<?php echo $config['facebook']['appID']; ?>" />
+            <?php
+        }
+
+        // Extra Style and Scripts
+        echo $this->headStyle();
+        echo $this->headScript();
+
+        // Add in Google analytics if required
+        try {
+
+            if (!empty($config['google']['analytics'])) {
+                echo $this->google_Analytics();
+            }
+        } catch (Exception $e) {
+
+        }
+        ?>
+
+    </head>
+    <body>
+
+        <?php
+        // Facebook SDK Helper
+        try {
+            echo $this->facebook_JavascriptSDK();
+        } catch (Exception $e) {
+
+        }
+
+        // Add in the View Content, with some prepared containers
+        try {
+            ?>
+
+            <div id="wrapper">
+
+                <div id="content">
+
+                    <div id="mainContent">
+                        <?php echo $this->layout()->content; ?>
+                    </div>
+
+                </div>
+
+                <?php
+                // Header
+                try {
+                    $this->footer();
+                } catch (Exception $e) {
+
+                }
+                ?>
+
+            </div>
+
+            <?php
+        } catch (Exception $e) {
+
+        }
+        ?>
+
+    </body>
+
+</html>
