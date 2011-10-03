@@ -4,7 +4,7 @@
  *
  * @category  CodeBlender
  * @package   Theme
- * @copyright Copyright (c) 2000-2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
+ * @copyright Copyright (c) 2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
  * @license   http://codeblender.net/license
  */
 // Config
@@ -44,9 +44,9 @@ echo $this->doctype('XHTML5');
 
         // Prepend the Core Theme style sheet
         echo $this->headLink()
-                ->prependStylesheet($this->themePath . '/css/default.css', 'screen')
-                ->prependStylesheet($this->cssPath . '/main.css', 'screen')
-                ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
+            ->prependStylesheet($this->themePath . '/default/css/default.css', 'screen')
+            ->prependStylesheet($this->cssPath . '/main.css', 'screen')
+            ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
 
         // Print the head links which can contain Javascript references
         echo $this->headStyle();
