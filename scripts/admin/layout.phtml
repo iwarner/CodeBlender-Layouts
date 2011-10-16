@@ -4,7 +4,7 @@
  *
  * @category  CodeBlender
  * @package   Theme
- * @copyright Copyright (c) 2000-2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
+ * @copyright Copyright (c) 2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
  * @license   http://codeblender.net/license
  *
  * @todo make Charset configurable from the config
@@ -33,9 +33,9 @@ echo $this->doctype('HTML5');
 
         // Stylesheet - Favicon
         echo $this->headLink()
-                ->appendStylesheet($this->themePath . '/css/admin.css', 'screen')
-                ->appendStylesheet($this->cssPath . '/main.css', 'screen')
-                ->headLink(array('rel' => 'favicon', 'href' => $this->imagePath . '/favicon.ico'), 'PREPEND');
+            ->appendStylesheet($this->themePath . '/admin/css/admin.css', 'screen')
+            ->appendStylesheet($this->cssPath . '/main.css', 'screen')
+            ->headLink(array('rel' => 'favicon', 'href' => $this->imagePath . '/favicon.ico'), 'PREPEND');
 
         // Extra Style and Scripts
         echo $this->headStyle();
@@ -104,7 +104,7 @@ echo $this->doctype('HTML5');
                     <?php echo $this->layout()->content; ?>
                 </div>
 
-                <div class="clear"></div>
+                <div class="clearFooter"></div>
 
             </div>
 
