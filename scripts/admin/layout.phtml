@@ -6,9 +6,6 @@
  * @package   Theme
  * @copyright Copyright (c) 2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
  * @license   http://codeblender.net/license
- *
- * @todo make Charset configurable from the config
- * @todo Add page class to the body for overiding purposes
  */
 // Create the Doctype as Strict
 echo $this->doctype('HTML5');
@@ -33,8 +30,7 @@ echo $this->doctype('HTML5');
 
         // Stylesheet - Favicon
         echo $this->headLink()
-            ->appendStylesheet($this->themePath . '/admin/css/admin.css', 'screen')
-            ->appendStylesheet($this->cssPath . '/main.css', 'screen')
+            ->appendStylesheet($this->cssPath . '/admin.css', 'screen')
             ->headLink(array('rel' => 'favicon', 'href' => $this->imagePath . '/favicon.ico'), 'PREPEND');
 
         // Extra Style and Scripts

@@ -44,8 +44,7 @@ echo $this->doctype('XHTML1_STRICT') . PHP_EOL;
 
         // Prepend the Core Theme style sheet
         echo $this->headLink()
-            ->prependStylesheet($this->themePath . '/default/css/default.css', 'screen')
-            ->prependStylesheet($this->cssPath . '/main.css', 'screen')
+            ->prependStylesheet($this->cssPath . '/default.css', 'screen')
             ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
 
         // Print the head links which can contain Javascript references
@@ -55,7 +54,7 @@ echo $this->doctype('XHTML1_STRICT') . PHP_EOL;
         // Check to see in the configuration if the site requires Get Satisfaction to be added
         try {
             if (!empty($config['getSatisfaction']['on'])) {
-                echo $this->feedBack_GetSatisfaction();
+                echo $this->getSatisfaction();
             }
         } catch (Exception $e) {
             echo 'Failed: ' . $e->getMessage();

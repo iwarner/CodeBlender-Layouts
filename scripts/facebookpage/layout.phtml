@@ -36,10 +36,7 @@ echo $this->doctype('HTML5')
 
         // Stylesheet - Favicon
         echo $this->headLink()
-                ->appendStylesheet($this->cssPath . '/jquery.ui.all.css', 'screen')
-                ->appendStylesheet($this->cssPath . '/main.css', 'screen')
-                ->appendStylesheet($this->themePath . '/css/facebook.css', 'screen')
-                ->appendStylesheet($this->cssPath . '/style.css', 'screen')
+                ->appendStylesheet($this->cssPath . '/facebook.css', 'screen')
                 ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
 
         if ($this->ogDescription) {

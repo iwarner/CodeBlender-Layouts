@@ -14,7 +14,7 @@ $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOption
 echo $this->doctype('XHTML5');
 ?>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#">
     <head>
 
         <?php
@@ -44,8 +44,7 @@ echo $this->doctype('XHTML5');
 
         // Prepend the Core Theme style sheet
         echo $this->headLink()
-            ->prependStylesheet($this->themePath . '/default/css/default.css', 'screen')
-            ->prependStylesheet($this->cssPath . '/main.css', 'screen')
+            ->prependStylesheet($this->cssPath . '/default.css', 'screen')
             ->headLink(array('rel' => 'favicon', 'href' => '/favicon.ico'), 'PREPEND');
 
         // Print the head links which can contain Javascript references
@@ -55,7 +54,7 @@ echo $this->doctype('XHTML5');
         // Check to see in the configuration if the site requires Get Satisfaction to be added
         try {
             if (!empty($config['getSatisfaction']['on'])) {
-                echo $this->feedBack_GetSatisfaction();
+                echo $this->getSatisfaction();
             }
         } catch (Exception $e) {
             echo 'Failed: ' . $e->getMessage();
@@ -76,7 +75,6 @@ echo $this->doctype('XHTML5');
         <?php
         // Add in Google analytics if required
         try {
-
             if (!empty($config['google']['analytics'])) {
                 echo $this->google_Analytics();
             }

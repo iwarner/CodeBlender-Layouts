@@ -6,9 +6,6 @@
  * @package   Theme
  * @copyright Copyright (c) 2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
  * @license   http://codeblender.net/license
- *
- * @todo make Charset configurable from the config
- * @todo Add page class to the body for overiding purposes
  */
 // Create the Doctype as Strict
 echo $this->doctype('HTML5');
@@ -33,16 +30,20 @@ echo $this->doctype('HTML5');
 
         // Stylesheet - Favicon
         echo $this->headLink()
-            ->appendStylesheet($this->themePath . '/admin/css/admin.css', 'screen')
-            ->appendStylesheet($this->cssPath . '/main.css', 'screen')
+            ->appendStylesheet($this->cssPath . '/admin.css', 'screen')
             ->headLink(array('rel' => 'favicon', 'href' => $this->imagePath . '/favicon.ico'), 'PREPEND');
 
-        // Jquery
-        echo $this->google_AjaxLibraries(array(
-            'library' => 'jquery',
-            'version' => 1
-        ));
+        // JQuery
+        try {
+            echo $this->google_AjaxLibraries(array(
+                'library' => 'jquery',
+                'version' => 1
+            ));
+        } catch (Exception $e) {
+            echo 'Failed: ' . $e->getMessage();
+        }
 
+        echo $this->headStyle();
         echo $this->headScript()->appendFile($this->jsPath . '/main.js', 'text/javascript');
         ?>
 
@@ -79,7 +80,13 @@ echo $this->doctype('HTML5');
 
         </div>
 
-        <?php echo $this->render('footer.phtml'); ?>
+        <?php
+        try {
+            echo $this->render('footer.phtml');
+        } catch (Exception $e) {
+            echo 'Failed: ' . $e->getMessage();
+        }
+        ?>
 
     </body>
 
