@@ -7,7 +7,7 @@
  * @copyright Copyright (c) 2011 Triangle Solutions Ltd. (http://www.triangle-solutions.com/)
  * @license   http://codeblender.net/license
  */
-// Set the filter option for the Active navigation
+// Filter option for the Active navigation
 $pages = $this->container->findAllBytopmenu(true);
 
 $count = count($pages);
@@ -17,7 +17,7 @@ $class = '';
 <dl id="topMenu">
 
     <?php
-    // Invoke the translation
+    // Translation
     $translate = Zend_Registry::get('Zend_Translate');
 
     // Loop through the container
@@ -31,7 +31,9 @@ $class = '';
                 $class = 'class="noBorder noPadding"';
             }
             ?>
+
             <dt><a href="<?php echo $page->getHref(); ?>" title="<?php echo $translate->_($page->getLabel()); ?>" <?php echo $class; ?>><span><?php echo $translate->_($page->getLabel()); ?></span></a></dt>
+
             <?php
         }
     }

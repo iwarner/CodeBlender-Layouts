@@ -9,10 +9,10 @@
  */
 ?>
 
-<ul>
+<ul class="tabs">
 
     <?php
-    // Invoke the translation
+    // Translation
     $translate = Zend_Registry::get('Zend_Translate');
 
     // Loop through the container
@@ -23,13 +23,13 @@
 
             // Create the class to use if the tab is active
             $liClass = $page->isActive(false) ? ' class="active"' : '';
-
-            // HTML to generate the tabs
             ?>
+
             <li<?php echo $liClass; ?>>
                 <a href="<?php echo $page->getHref(); ?>" title="<?php echo $translate->_($page->getTitle()); ?>">
                     <span><?php echo $translate->_($page->getLabel()); ?></span></a>
             </li>
+
             <?php
         }
     }

@@ -10,34 +10,38 @@
 // Config
 $config = Zend_Controller_Front::getInstance()->getParam('bootstrap')->getOptions();
 
-// Create the DocType as Strict
+// DocType
 echo $this->doctype('XHTML5');
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" xmlns:og="http://ogp.me/ns#">
+
     <head>
 
         <?php
-        // Add in the Page Title
-        echo $this->headTitle($this->title);
-
-        // Set the correct content type
-        echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8');
-
-        // Create the Facebook Meta Tags required
-        if ($this->ogDescription) {
-            ?>
-            <meta property="og:description" content="<?php echo $this->ogDescription; ?>" />
-            <meta property="og:image" content="<?php echo $this->imagePath . $this->ogImage; ?>" />
-            <meta property="og:site_name" content="Triangle Solutions" />
-            <meta property="og:title" content="<?php echo $this->ogTitle; ?>" />
-            <meta property="og:type" content="article" />
-            <meta property="og:url" content="<?php echo $this->ogURL; ?>" />
-            <meta property="fb:app_id" content="<?php echo $config['facebook']['appID']; ?>" />
-            <?php
+        // Header
+        try {
+            $this->header();
+        } catch (Exception $e) {
+            echo 'Failed: ' . $e->getMessage();
         }
 
-        // Set the Google Verification line if a valid entry is in the configuration
+        // Page Title
+        echo $this->headTitle($this->title);
+
+        // Content Type
+        echo $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html; charset=UTF-8');
+
+        // Facebook Open Graph Meta Tags
+        if ($this->ogDescription) {
+            try {
+                echo $this->facebook_OpenGraph();
+            } catch (Exception $e) {
+                echo 'Failed: ' . $e->getMessage();
+            }
+        }
+
+        // Google Verification line if a valid entry is in the configuration
         if (!empty($config['google']['siteVerification'])) {
             $this->headMeta()->setName('google-site-verification', $config['google']['siteVerification']);
         }
@@ -51,7 +55,7 @@ echo $this->doctype('XHTML5');
         echo $this->headStyle();
         echo $this->headScript();
 
-        // Check to see in the configuration if the site requires Get Satisfaction to be added
+        // Get Satisfaction
         try {
             if (!empty($config['getSatisfaction']['on'])) {
                 echo $this->getSatisfaction();
@@ -61,10 +65,11 @@ echo $this->doctype('XHTML5');
         }
         ?>
     </head>
+
     <body>
 
         <?php
-        // Facebook SDK Helper
+        // Facebook JS SDK Helper
         try {
             echo $this->facebook_JavascriptSDK();
         } catch (Exception $e) {
@@ -73,7 +78,7 @@ echo $this->doctype('XHTML5');
         ?>
 
         <?php
-        // Add in Google analytics if required
+        // Google analytics
         try {
             if (!empty($config['google']['analytics'])) {
                 echo $this->google_Analytics();
@@ -88,69 +93,60 @@ echo $this->doctype('XHTML5');
             <a name="top"></a>
 
             <div id="head">
+
                 <?php
                 try {
 
-                    // Add the top menu navigation
-                    echo $this->navigation()->menu()->setPartial(array('topmenu.phtml', 'default'));
+                    // Top Navigation
+                    echo $this->navigation()->menu()->setPartial(array('partial/topmenu.phtml', 'default'));
 
-                    // Add the tab navigation
-                    echo $this->navigation()->menu()->setPartial(array('menu.phtml', 'default'));
+                    // Tab Navigation
+                    echo $this->navigation()->menu()->setPartial(array('partial/menu.phtml', 'default'));
                 } catch (Exception $e) {
                     Zend_Debug::dump($e);
                 }
-                ?>
-                <div id="googleSearch">
-                    <?php
-                    // Add the Google Search element
-                    if (!empty($config['google']['Cx'])) {
 
-                        try {
-                            echo $this->google_Search();
-                        } catch (Exception $e) {
-                            echo 'Failed: ' . $e->getMessage();
-                        }
+                // Google Search
+                if (!empty($config['google']['Cx'])) {
+
+                    try {
+                        echo '<div id="googleSearch">' . $this->google_Search() . '</div>';
+                    } catch (Exception $e) {
+                        echo 'Failed: ' . $e->getMessage();
                     }
-                    ?>
-                </div>
+                }
+                ?>
+
             </div>
+
             <?php
-            // Add the main Layout content
+            // Main Layout Content
             try {
                 echo $this->layout()->content;
             } catch (Exception $e) {
                 echo 'Failed: ' . $e->getMessage();
             }
             ?>
-            <div class="clear"></div>
+
+            <div id="footerClear"></div>
+
         </div>
 
-        <div id="footer">
-            <div id="footerInner">
-                <?php
-                // Renders the Footer Partial from the default Module
-                try {
-                    echo $this->render('footer.phtml');
-                } catch (Exception $e) {
-                    echo 'Failed: ' . $e->getMessage();
-                }
-                ?>
-            </div>
-        </div>
+        <?php
+        // Footer Partial
+        try {
+            echo $this->render('partial/footer.phtml');
+        } catch (Exception $e) {
+            echo 'Failed: ' . $e->getMessage();
+        }
 
-        <div id="copyrightInfo">
-            <div id="copyrightInner">
-                <?php
-                // Renders the Copyright Partial from the default Module
-                try {
-                    echo $this->render('copyright.phtml');
-                } catch (Exception $e) {
-                    echo 'Failed: ' . $e->getMessage();
-                }
-                ?>
-                <div class="clear"></div>
-            </div>
-        </div>
+        // Copyright Partial
+        try {
+            echo $this->render('partial/copyright.phtml');
+        } catch (Exception $e) {
+            echo 'Failed: ' . $e->getMessage();
+        }
+        ?>
 
     </body>
 
